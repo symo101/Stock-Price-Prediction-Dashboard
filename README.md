@@ -23,4 +23,17 @@ Interactive Visualization: A dynamic graph with a clear legend identifying Histo
 Real-time Server: Runs on a local Flask server via Dash for instant data exploration.
 
 
+![Stock Prediction Dashboard](Screenshot%20(95).png)
+
+## Development Process
+Below are the stages of development, including environment setup and model training:
+
+| Initial Setup | Environment Fix | Dashboard Launch |
+| :---: | :---: | :---: |
+| ![Setup](Screenshot%20(91).png) | ![Fix](Screenshot%20(92).png) | ![Launch](Screenshot%20(94).png) |
+
+
+
+
+
 
