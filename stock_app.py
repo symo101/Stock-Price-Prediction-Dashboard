@@ -21,15 +21,8 @@ df_nse["Date"]=pd.to_datetime(df_nse.Date,format="%Y-%m-%d")
 df_nse.index=df_nse['Date']
 
 
-data=df_nse.sort_index(ascending=True,axis=0)
-new_data=pd.DataFrame(index=range(0,len(df_nse)),columns=['Date','Close'])
-
-for i in range(0,len(data)):
-    new_data["Date"][i]=data['Date'][i]
-    new_data["Close"][i]=data["Close"][i]
-
-new_data.index=new_data.Date
-new_data.drop("Date",axis=1,inplace=True)
+data = df_nse.sort_index(ascending=True, axis=0)
+new_data = data[['Close']].copy()
 
 dataset=new_data.values
 
@@ -64,9 +57,9 @@ X_test=np.reshape(X_test,(X_test.shape[0],X_test.shape[1],1))
 closing_price=model.predict(X_test)
 closing_price=scaler.inverse_transform(closing_price)
 
-train=new_data[:987]
-valid=new_data[987:]
-valid['Predictions']=closing_price
+train = new_data[:987]
+valid = new_data[987:].copy()
+valid['Predictions'] = closing_price
 
 
 
@@ -164,7 +157,9 @@ app.layout = html.Div([
 
 @app.callback(Output('highlow', 'figure'),
               [Input('my-dropdown', 'value')])
-def update_graph(selected_dropdown):
+def update_highlow_graph(selected_dropdown):
+    if not selected_dropdown:
+        return {'data': [], 'layout': go.Layout(title="No stock selected")}
     dropdown = {"TSLA": "Tesla","AAPL": "Apple","FB": "Facebook","MSFT": "Microsoft",}
     trace1 = []
     trace2 = []
@@ -201,7 +196,9 @@ def update_graph(selected_dropdown):
 
 @app.callback(Output('volume', 'figure'),
               [Input('my-dropdown2', 'value')])
-def update_graph(selected_dropdown_value):
+def update_volume_graph(selected_dropdown_value):
+    if not selected_dropdown_value:
+        return {'data': [], 'layout': go.Layout(title="No stock selected")}
     dropdown = {"TSLA": "Tesla","AAPL": "Apple","FB": "Facebook","MSFT": "Microsoft",}
     trace1 = []
     for stock in selected_dropdown_value:
